@@ -81,7 +81,33 @@ Ext.define('DMPlanner.Application', {
     },
 
     launch: function() {
-        var me = this;
+        var me = this,
+            myRenderer = new marked.Renderer();
+
+        //configure marked for external links
+
+        myRenderer.link = function(href, title, text) {
+            var external, newWindow, out;
+
+            external = /^https?:\/\/.+$/.test(href);
+            newWindow = external || title === 'newWindow';
+            out = "<a href=\"" + href + "\"";
+
+            if (newWindow) {
+                out += ' target="_blank"';
+                text += '<span  class="fa dmp-external-link" title="External link, opens in new window">&#xf08e;</span>';
+            }
+
+            if (title && title !== 'newWindow') {
+                out += " title=\"" + title + "\"";
+            }
+
+            out += ">" + text + "</a>";
+
+            return out;
+        };
+
+        marked.setOptions({renderer: myRenderer});
 
         //set default level
         DMPlanner.util.LevelFilter.value = me.dmpLevel;
@@ -201,6 +227,7 @@ Ext.define('DMPlanner.Application', {
             title: 'Error',
             glyph: 'xf12a@FontAwesome',
             html: txt,
+            position: 'tr',
             maxWidth: 400
         }).show();
     },
@@ -214,6 +241,7 @@ Ext.define('DMPlanner.Application', {
             title: title || 'Info',
             glyph: 'xf129@FontAwesome',
             html: txt,
+            position: 'tr',
             maxWidth: 400
         }).show();
     },

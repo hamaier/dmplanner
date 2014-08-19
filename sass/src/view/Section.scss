@@ -1,3 +1,35 @@
 .x-toolbar-docked-bottom, .x-border-layout-ct {
   background-color: lighten($panel-base-color, 50);
 }
+
+.dmp-marked {
+  padding: 0 1em;
+
+  h1 {
+    &:first-child {
+      margin-top: 0em;
+    }
+
+    padding: $font-size/2;
+    border-bottom: 5px solid $panel-base-color;
+    font-size: $font-size*1.1;
+    margin-top: 2em;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  th, td {
+    padding: 10px 5px;
+    border: $grid-header-border-width $grid-header-border-style $grid-header-border-color;
+    overflow: hidden;
+    word-break: normal;
+  }
+
+  th {
+    background-color: lighten($panel-base-color, 50);
+    font-weight: 900;
+  }
+}
